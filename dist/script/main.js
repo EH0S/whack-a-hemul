@@ -1,7 +1,23 @@
+const startbtn = document.getElementById('startbtn');
+const startmenu = document.getElementById('startmenu');
+const music = document.getElementById('music');
+const gamecontainer = document.getElementById('gamecontainer');
+
+startbtn.addEventListener('click', () => {
+    startmenu.className = 'hidden';
+    gamecontainer.className = 'bg-default h-screen items-center pt-32 justify-center';
+    document.body.style.backgroundImage = 'url("./img/bg.png")';
+    music.src = "";
+    
+});
+
 const container = document.getElementById('container');
 const image = document.getElementById('source');
 const cursor = document.getElementById('.cursor');
 const grid = [];
+
+let currentPos = 0;
+
 
 
 for (let r = 0; r < 4; r++) {
@@ -12,7 +28,8 @@ for (let r = 0; r < 4; r++) {
 
     for (let c = 0; c < 4; c++) {
         const canv = document.createElement('canvas');
-        canv.className = 'bg-green-900 w-40 h-40 border'; //grid layout
+        canv.addEventListener('click', CanvasClicked, false);
+        canv.className = 'bg-[#0A1C4D] opacity-80 w-40 h-40 border-2'; //grid layout
         row.appendChild(canv); 
         gridRow.push(canv); 
     }
@@ -20,25 +37,23 @@ for (let r = 0; r < 4; r++) {
     grid.push(gridRow);
     
 }
+
+
+
 const canvas = grid[getRandomInt(4)][getRandomInt(4)]; 
 function fillCanvases() {
     for (let r = 0; r < 4; r++) {
         for (let c = 0; c < 4; c++) {
             const canvas = grid[r][c]; 
             const ctx = canvas.getContext('2d'); 
-            
-            ctx.fillStyle = 'red'; 
             //ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#05080D";
+
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
     }
 }
 
-
-const hemuli = {
-    speed: 1
-    
-};
 
 function start() {
     fillCanvases();  
@@ -46,9 +61,31 @@ function start() {
 }
 
 function drawPlayer(){
-    const canvas = grid[getRandomInt(4)][getRandomInt(4)]; 
+    const x = getRandomInt(4);
+    const y = getRandomInt(4);
+
+    const canvas = grid[x][y]; 
+    //canvas.id = "yes";
     const ctx = canvas.getContext('2d'); 
+
+    ctx.fillStyle = "#0A1C4D";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+    currentPos = [x, y];
+}
+
+function CanvasClicked(event) {
+  // Check if 'event' is defined
+  if (!event) {
+    console.error("Event is undefined");
+    return;
+  }
+
+  const ctx = event.target.getContext("2d");
+  if (ctx.fillStyle === "#0a1c4d") {
+  console.log('omgmg');
+  }
 }
 
 
@@ -56,12 +93,15 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * max);
 }
 
+
+
 async function gameLoop(){
 const delay = ms => new Promise(res => setTimeout(res, ms));
  let time = 10
  while (time > 0){
     drawPlayer();
-    await delay(hemuli.speed * 1000);
+   // checkForClicks();
+    await delay(500);
     fillCanvases();
     await delay(500); //blinking delay - can be removed if annoying
 

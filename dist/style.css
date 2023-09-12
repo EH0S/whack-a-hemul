@@ -52,9 +52,6 @@ html {
   /* 6 */
 }
 
-
-
-
 /*
 1. Remove the margin in all browsers.
 2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
@@ -225,8 +222,6 @@ select {
 1. Correct the inability to style clickable types in iOS and Safari.
 2. Remove default button styles.
 */
-
-
 
 button,
 [type='button'],
@@ -573,8 +568,6 @@ video {
   }
 }
 
-
-
 .visible {
   visibility: visible;
 }
@@ -591,13 +584,37 @@ video {
   position: relative;
 }
 
-.m-auto {
-  margin: auto;
-}
-
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
+}
+
+.ml-10 {
+  margin-left: 2.5rem;
+}
+
+.ml-14 {
+  margin-left: 3.5rem;
+}
+
+.ml-20 {
+  margin-left: 5rem;
+}
+
+.ml-5 {
+  margin-left: 1.25rem;
+}
+
+.mt-10 {
+  margin-top: 2.5rem;
+}
+
+.mt-32 {
+  margin-top: 8rem;
+}
+
+.mt-5 {
+  margin-top: 1.25rem;
 }
 
 .block {
@@ -624,68 +641,24 @@ video {
   display: none;
 }
 
-.h-1 {
-  height: 0.25rem;
-}
-
-.h-2 {
-  height: 0.5rem;
-}
-
 .h-40 {
   height: 10rem;
-}
-
-.h-full {
-  height: 100%;
 }
 
 .h-screen {
   height: 100vh;
 }
 
-.h-1\/4 {
-  height: 25%;
-}
-
-.h-\[25\%\] {
-  height: 25%;
-}
-
-.min-h-\[40\] {
-  min-height: 40;
-}
-
 .w-1 {
   width: 0.25rem;
-}
-
-.w-2 {
-  width: 0.5rem;
-}
-
-.w-40 {
-  width: 10rem;
-}
-
-.w-full {
-  width: 100%;
 }
 
 .w-1\/2 {
   width: 50%;
 }
 
-.w-2\/3 {
-  width: 66.666667%;
-}
-
-.w-1\/4 {
-  width: 25%;
-}
-
-.w-\[25\%\] {
-  width: 25%;
+.w-40 {
+  width: 10rem;
 }
 
 .border-collapse {
@@ -700,14 +673,6 @@ video {
   resize: both;
 }
 
-.flex-row {
-  flex-direction: row;
-}
-
-.flex-col {
-  flex-direction: column;
-}
-
 .items-center {
   align-items: center;
 }
@@ -716,90 +681,88 @@ video {
   justify-content: center;
 }
 
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.rounded-md {
+  border-radius: 0.375rem;
+}
+
 .border {
   border-width: 1px;
 }
 
-.border-\[0\] {
-  border-width: 0;
+.border-2 {
+  border-width: 2px;
 }
 
-.border-\[\#fff\] {
-  --tw-border-opacity: 1;
-  border-color: rgb(255 255 255 / var(--tw-border-opacity));
-}
-
-.border-\[red\] {
-  --tw-border-opacity: 1;
-  border-color: rgb(255 0 0 / var(--tw-border-opacity));
-}
-
-.border-\[ccc\] {
-  border-color: ccc;
-}
-
-.bg-green-300 {
+.bg-\[\#0A1C4D\] {
   --tw-bg-opacity: 1;
-  background-color: rgb(134 239 172 / var(--tw-bg-opacity));
+  background-color: rgb(10 28 77 / var(--tw-bg-opacity));
 }
 
-.bg-green-600 {
+.bg-purple-700 {
   --tw-bg-opacity: 1;
-  background-color: rgb(22 163 74 / var(--tw-bg-opacity));
+  background-color: rgb(126 34 206 / var(--tw-bg-opacity));
 }
 
-.bg-green-950 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(5 46 22 / var(--tw-bg-opacity));
-}
-
-.bg-purple-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(168 85 247 / var(--tw-bg-opacity));
-}
-
-.bg-purple-900 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(88 28 135 / var(--tw-bg-opacity));
-}
-
-.bg-purple-950 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(59 7 100 / var(--tw-bg-opacity));
-}
-
-.bg-red-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
-}
-
-.bg-red-900 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(127 29 29 / var(--tw-bg-opacity));
-}
-
-.bg-house {
-  background-image: url('./img/house.jpg');
-}
-
-.bg-cover {
-  background-size: cover;
+.bg-default {
+  background-image: url('./dist/img/mountains.jpg');
 }
 
 .p-10 {
   padding: 2.5rem;
 }
 
-.pt-5 {
-  padding-top: 1.25rem;
+.p-5 {
+  padding: 1.25rem;
+}
+
+.pt-10 {
+  padding-top: 2.5rem;
+}
+
+.pt-14 {
+  padding-top: 3.5rem;
+}
+
+.pt-20 {
+  padding-top: 5rem;
+}
+
+.pt-24 {
+  padding-top: 6rem;
+}
+
+.pt-32 {
+  padding-top: 8rem;
+}
+
+.pt-40 {
+  padding-top: 10rem;
+}
+
+.text-left {
+  text-align: left;
 }
 
 .text-center {
   text-align: center;
 }
 
-.align-middle {
-  vertical-align: middle;
+.text-right {
+  text-align: right;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
 }
 
 .text-4xl {
@@ -807,24 +770,38 @@ video {
   line-height: 2.5rem;
 }
 
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
 .font-bold {
   font-weight: 700;
 }
 
-.text-purple-400 {
+.text-green-500 {
   --tw-text-opacity: 1;
-  color: rgb(192 132 252 / var(--tw-text-opacity));
+  color: rgb(34 197 94 / var(--tw-text-opacity));
 }
 
-.text-yellow-300 {
+.text-white {
   --tw-text-opacity: 1;
-  color: rgb(253 224 71 / var(--tw-text-opacity));
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .underline {
   text-decoration-line: underline;
 }
 
+.opacity-80 {
+  opacity: 0.8;
+}
+
 .outline {
   outline-style: solid;
+}
+
+.hover\:bg-\[\#0A1C4D\]:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(10 28 77 / var(--tw-bg-opacity));
 }
