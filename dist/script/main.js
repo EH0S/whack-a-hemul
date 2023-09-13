@@ -124,6 +124,12 @@ function drawPlayer() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
     currentPos = [x, y];
+
+    
+
+
+   // requestAnimationFrame(animate);
+    
     async function animate(){
         ctx.drawImage(image, 21, 145, canvas.width, canvas.height);
         await delay(animationDelay);
@@ -351,3 +357,48 @@ document.addEventListener('mousemove', (e) => {
     customCursor.style.top = `${e.clientY - cursorSize / 1.5}px`;
 });
 updateBestScoreElement();
+
+
+
+//cloud animation
+//could be improved making scalable but too lazy
+//edit: made it scalable but doesn't look right
+const cloudCanvas = document.getElementById('canvascloud');
+const c = cloudCanvas.getContext('2d');
+
+// Define an array to hold cloud objects
+const clouds = [
+  { image: document.getElementById('cloud1'), x: 0, y: 50, speed: 0.01 },
+  { image: document.getElementById('cloud2'), x: 40, y: 30, speed: 0.01 },
+  { image: document.getElementById('cloud1'), x: 50, y: 60, speed: 0.01 },
+  { image: document.getElementById('cloud2'), x: 85, y: 40, speed: 0.01 },
+  { image: document.getElementById('cloud1'), x: 0, y: 90, speed: 0.01 },
+
+  { image: document.getElementById('cloud1'), x: 200, y: 50, speed: 0.01 },
+  { image: document.getElementById('cloud2'), x: 240, y: 30, speed: 0.01 },
+  { image: document.getElementById('cloud1'), x: 250, y: 60, speed: 0.01 },
+  { image: document.getElementById('cloud2'), x: 285, y: 40, speed: 0.01 },
+  { image: document.getElementById('cloud1'), x: 200, y: 90, speed: 0.01 },
+
+
+  //(scalable!!)
+];
+
+function cloudsAnimation() {
+  c.clearRect(0, 0, cloudCanvas.width, cloudCanvas.height);
+
+  // Loop through the cloud objects and update their positions
+  for (const cloud of clouds) {
+    c.drawImage(cloud.image, cloud.x, cloud.y, 20, 10);
+    cloud.x += cloud.speed;
+
+    // If a cloud goes off the canvas, reset its position
+    if (cloud.x > cloudCanvas.width) {
+      cloud.x = -20; // Place it just outside the canvas
+    }
+  }
+
+  window.requestAnimationFrame(cloudsAnimation);
+}
+
+window.requestAnimationFrame(cloudsAnimation);
