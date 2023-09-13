@@ -62,6 +62,8 @@ body {
   /* 1 */
   line-height: inherit;
   /* 2 */
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 /*
@@ -390,10 +392,35 @@ button,
   cursor: pointer;
 }
 
+
+.gameArea .gameButton {
+  cursor: none;
+}
+
+body{
+  cursor: none;
+  
+}
+.startmenu{
+  cursor: default;
+  
+}
+
+#custom-cursor {
+  width: 132px; /* Set the size of the clickable area */
+  height: 132px;
+  background-image: url('/dist/img/nuija_transparent1.png'); /* Use your custom cursor image */
+  position: absolute;
+  pointer-events: none;
+  transform-origin: 50%;
+  z-index: 9999;
+}
+
+
+
 /*
 Make sure disabled buttons don't get the pointer cursor.
 */
-
 :disabled {
   cursor: default;
 }
@@ -433,6 +460,22 @@ video {
 [hidden] {
   display: none;
 }
+
+
+@keyframes swing {
+  0% { transform: rotate(0deg); }
+  30% { transform: rotate(-45deg); } 
+  60% { transform: rotate(0deg); } 
+  100% { transform: rotate(0deg); }
+}
+@keyframes rise {
+  0% { transform: translateX(-50%) translateY(100%); 
+  }
+  100% { transform: translateX(-50%) translateY(0);
+  }
+}
+
+
 
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
@@ -605,6 +648,8 @@ video {
   margin-left: 1.25rem;
 }
 
+
+
 .mt-10 {
   margin-top: 2.5rem;
 }
@@ -680,6 +725,9 @@ video {
 .justify-center {
   justify-content: center;
 }
+
+
+
 
 .rounded-lg {
   border-radius: 0.5rem;

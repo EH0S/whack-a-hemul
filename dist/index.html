@@ -5,29 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Whack-a-Hemul</title>
+    
 </head>
+
 <body style="background-image: url('./img/mainbg.png');">
-<div class="h-screen justify-center items-center bg-default"
+    <div class="startmenu">
+
+<div class=" h-screen justify-center items-center bg-default" 
     id="startmenu">
-    <div class="flex justify-center">
+    
+    <div class=" flex justify-center" >
         <button class="mt-10 p-5 border rounded-lg text-white font-bold hover:bg-[#0A1C4D]"
         id="startbtn" >Start the game!</button>
 
-        <audio id="music" autoplay loop>
+        <audio id="music" autoplay>
             <source src="./sound/music.wav" type="audio/wav">
             Your browser does not support the audio element.
-        </audio>
-    </div>
-</div>
-
-
-    <div class="bg-default h-screen items-center justify-center hidden" id="gamecontainer">
-        <button type="button" id="start" class= "ml-20 text-4xl  font-bold p-10">Begin</button>
-        <button type="button" id="newGame" class=" ml-5 text-4xl  font-bold p-10">Reset</button>
-        <div class="justify-center items-center mx-auto w-1/2" id="container"></div>
+          </audio>
+          
     </div>
     
-    <img src="./img/hemul_8k_UHD.png" width="" class="hidden" alt="" id="source" />
+</div>
+</div>
+
+<div class="gameArea">
+    <audio id="hihi"></audio>
+    <audio id="gameMusic"></audio>
+    <div class="bg-default h-screen items-center justify-center hidden" id="gamecontainer">
+        <div class="scoreboard">
+            <p>Score: <span id="score">0</span></p>
+            <p>Best Score: <span id="best-score">0</span></p>
+        </div>
+        <div id="custom-cursor" ></div>
+        <button type="button" id="start" class= "gameButton ml-20 text-4xl  font-bold p-10">Begin</button>
+        <button type="button" id="newGame" class="gameButton ml-5 text-4xl  font-bold p-10">Reset</button>
+        <div class="justify-center items-center mx-auto w-1/2" id="container"></div>
+        
+    </div>
+</div>
+    <img src="./img/hemul_8k_UHD.png" class="hidden" alt="" id="source" />
+    <img src="./img/nuija_transparent1.png" width="100px" class="hidden" alt="" id="enemy" />
 
     <script type="text/javascript" src="./script/main.js"></script>
     
