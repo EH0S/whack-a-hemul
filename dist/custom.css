@@ -1,0 +1,28 @@
+.gameArea .gameButton {
+    cursor: none;
+  }
+  
+
+#custom-cursor {
+    width: 132px; /* Set the size of the clickable area */
+    height: 132px;
+    background-image: url('/dist/img/nuija_transparent1.png'); /* Use your custom cursor image */
+    background-repeat: no-repeat;
+    position: absolute;
+    pointer-events: none;
+    transform-origin: 50%;
+    z-index: 9999;
+}
+
+@keyframes swing {
+    0% { transform: rotate(0deg); }
+    30% { transform: rotate(-45deg); } 
+    60% { transform: rotate(0deg); } 
+    100% { transform: rotate(0deg); }
+  }
+  @keyframes rise {
+    0% { transform: translateX(-50%) translateY(100%); 
+    }
+    100% { transform: translateX(-50%) translateY(0);
+    }
+  }

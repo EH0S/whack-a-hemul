@@ -69,7 +69,7 @@ for (let r = 0; r < 4; r++) {
     for (let c = 0; c < 4; c++) {
         const canv = document.createElement('canvas');
         canv.addEventListener('click', CanvasClicked, false);
-        canv.className = 'bg-[#0A1C4D] opacity-80 w-40 h-40 border-2'; //grid layout
+        canv.className = 'bg-[#C5DCFF] opacity-80 w-40 h-40 mt-3 ml-3 border-2 rounded-xl shadow-lg'; //grid layout
         row.appendChild(canv); 
         gridRow.push(canv); 
     }
@@ -82,12 +82,15 @@ for (let r = 0; r < 4; r++) {
 
 const canvas = grid[getRandomInt(4)][getRandomInt(4)]; 
 function fillCanvases() {
+    const fillColor = "#C5DCFF";
     for (let r = 0; r < 4; r++) {
         for (let c = 0; c < 4; c++) {
+            
             const canvas = grid[r][c]; 
+            canvas.id = '';
+
             const ctx = canvas.getContext('2d'); 
-            //ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#05080D";
+            ctx.fillStyle = fillColor;
 
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
@@ -114,8 +117,9 @@ function drawPlayer() {
     const canvas = grid[x][y];
     const ctx = canvas.getContext('2d');
 
-    ctx.fillStyle = "#0a1c4d";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#C5DCFF";
+    canvas.id = 'hemul';
+    //ctx.fillRect(0, 0, canvas.width, canvas.height);
     //console.log(canvas.width, canvas.height);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
@@ -143,7 +147,8 @@ function drawEnemy(){
     const canvas = grid[x][y];
     const ctx = canvas.getContext('2d');
 
-    ctx.fillStyle = "#0a1c5d";
+    canvas.id = 'enemy';
+    ctx.fillStyle = "#C5DCFF";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     //ctx.drawImage(enemy, 0, 0, canvas.width, canvas.height);
@@ -176,8 +181,8 @@ function CanvasClicked(event) {
   const canvas = event.target;
   const ctx = canvas.getContext("2d");
 
-  if (ctx.fillStyle === "#0a1c4d") {
-    
+  if (canvas.id === "hemul") {
+    canvas.id = '';
     pojoja = pojoja + 1;
     updateScore();
     console.log('score increased by one\nTotal:',pojoja);
@@ -187,10 +192,10 @@ function CanvasClicked(event) {
     animateCanvasRemoval(canvas);
     
   }
-  else if (inGame && ctx.fillStyle != "#0a1c5d") {
+  else if (inGame && canvas.id != "hemul") {
     console.log('l bozo'); // if empty square clicked do this...
   }
-  if (ctx.fillStyle === "#0a1c5d"){
+  if (canvas.id === "enemy"){
     death.play();
     death.play();
     death.play();
@@ -200,7 +205,7 @@ function CanvasClicked(event) {
 
     
     isDead = true;
-    alert('You got eated by mörkis - game over');
+    alert('game over');
     window.location.reload();
   }
 }
@@ -217,10 +222,11 @@ function animateCanvasRemoval(canvas) {
 
     function animate(currentTime) {
 
+
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "#05080D";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+       // ctx.clearRect(0, 0, canvas.width, canvas.height);
+      //  ctx.fillStyle = "#05080D";
+      //  ctx.fillRect(0, 0, canvas.width, canvas.height);
         
     }
 
@@ -264,7 +270,7 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
         
     }
    // checkForClicks();
-    await delay(Math.floor((Math.random() * 3000) + 800)); 
+    await delay(Math.floor((Math.random() * 1000) + 800)); 
     fillCanvases();
     await delay(500); //blinking delay - can be removed if annoying
 
@@ -311,7 +317,7 @@ document.addEventListener('DOMContentLoaded', function() {
         pojoja = 0;
         updateScore();
         inGame = false;
-        clear(); // goes to main menu - if removed stays in game and can start new one
+        clear();
     };
 });
 
@@ -319,7 +325,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.addEventListener('click', (e) => {
     
-    customCursor.style.animation = 'swing 0.3s ease-in-out';
+    customCursor.style.animation = 'swing 0.2s ease-in';
 
     // Reset the animation after it finishes
     customCursor.addEventListener('animationend', () => {

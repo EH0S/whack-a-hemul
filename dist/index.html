@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="custom.css">
     <title>Whack-a-Hemul</title>
     
 </head>
 
-<body style="background-image: url('./img/mainbg.png');">
+<body style="background-image: url('./img/bg-2.png');">
     <div class="startmenu">
 
-<div class=" h-screen justify-center items-center bg-default" 
+<div class=" h-screen justify-center items-center bg-default hidden" 
     id="startmenu">
     
     <div class=" flex justify-center" >
@@ -31,14 +32,14 @@
 <div class="gameArea">
     <audio id="hihi"></audio>
     <audio id="gameMusic"></audio>
-    <div class="bg-default h-screen items-center justify-center hidden" id="gamecontainer">
+    <div class="bg-default h-screen items-center justify-center" id="gamecontainer">
         <div class="scoreboard">
             <p>Score: <span id="score">0</span></p>
             <p>Best Score: <span id="best-score">0</span></p>
         </div>
         <div id="custom-cursor" ></div>
-        <button type="button" id="start" class= "gameButton ml-20 text-4xl  font-bold p-10">Begin</button>
-        <button type="button" id="newGame" class="gameButton ml-5 text-4xl  font-bold p-10">Reset</button>
+        <button type="button" id="start" class= "gameButton ml-20 text-4xl  font-bold p-10 text-[#465A91] bg-[#C5DCFF] opacity-80 border-4 rounded-xl shadow-lg">Start</button>
+        <button type="button" id="newGame" class="gameButton ml-5 text-4xl  font-bold p-10 text-[#465A91] bg-[#C5DCFF] opacity-80 border-4 rounded-xl shadow-lg">Restart</button>
         <div class="justify-center items-center mx-auto w-1/2" id="container"></div>
         
     </div>
