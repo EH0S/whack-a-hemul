@@ -37,12 +37,14 @@
 </div>
 
 <div class="gameArea">
+    <audio id="myAudio" loop src="./sound/music.wav" class="hidden"></audio>
     <audio id="hihi"></audio>
     <audio id="gameMusic"></audio>
     <div class="bg-default h-screen items-center justify-center " id="gamecontainer">
         <div class="scoreboard">
             <p>Score: <span id="score">0</span></p>
             <p>Best Score: <span id="best-score">0</span></p>
+            <p>Lifes: <span id="life">3</span></p>
         </div>
         <div id="custom-cursor" ></div>
         <button type="button" id="start" class= "gameButton ml-20 text-4xl  font-bold p-10 text-[#465A91] bg-[#C5DCFF] opacity-80 border-4 rounded-xl ">Start</button>

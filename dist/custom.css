@@ -13,10 +13,15 @@
     transform-origin: 50%;
     z-index: 9999;
 }
+body{
+  cursor: none;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
 @keyframes swing {
     0% { transform: rotate(0deg); }
-    30% { transform: rotate(-45deg); } 
+    30% { transform: rotate(-45deg); }  
     60% { transform: rotate(0deg); } 
     100% { transform: rotate(0deg); }
   }
