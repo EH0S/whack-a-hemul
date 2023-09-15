@@ -4,15 +4,13 @@ const music = document.getElementById('music');
 const gamecontainer = document.getElementById('gamecontainer');
 const customCursor = document.getElementById('custom-cursor');
 const continueButton = document.getElementById('continueButton');
-const bgImage = document.querySelector(".bg-image");
+const bodyElement = document.body;
 let inMenu = true;
 let inGame = false;
 let pojoja = 0
 let isDead = false;
 var audio = new Audio('./sound/gnome.mp3');
-var death = new Audio('./sound/death.mp3');
-let playerPosition = { x: -1, y: -1 }; 
-let enemyPosition = { x: -1, y: -1 }; 
+var death = new Audio('./sound/death.mp3'); 
 
 let bestScore = localStorage.getItem('bestScore') || 0; 
 const scoreElement = document.getElementById('score');
@@ -21,9 +19,12 @@ const lifes = document.getElementById('life');
 let lifeAmount = 3;
 let hittedHemuls = 0;
 let missedHemuls = 0;
+let enemyDrawn = false;
 
 var audioElement = new Audio('./sound/music.wav');
 var crispyButton = new Audio('./sound/crispyButton.mp3');
+
+let enemyPos = [];
 
 function changePlaybackSpeed(speed) {
     if (audioElement) {
@@ -143,7 +144,14 @@ function drawPlayer() {
     
     currentPos = [x, y];
 
-    
+    for (enemys in enemyPos) {
+        console.log("hihi: ",enemys);
+    }
+
+    if (enemyDrawn){
+        currentPos = [x, y -1];
+        console.log("JOO O");
+    }
 
 
    // requestAnimationFrame(animate);
@@ -170,7 +178,6 @@ function drawEnemy(){
     const y = getRandomInt(4);
     const canvas = grid[x][y];
     const ctx = canvas.getContext('2d');
-    enemyPosition = { x, y };
     canvas.id = 'enemy';
     ctx.fillStyle = "#C5DCFF";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -178,6 +185,10 @@ function drawEnemy(){
     //ctx.drawImage(enemy, 0, 0, canvas.width, canvas.height);
 
     currentPos = [x, y];
+
+    enemyPos.push(x,y);
+    console.log("pos enemy:",enemyPos);
+
     async function animate(){
         ctx.drawImage(enemy, 21, 145, canvas.width, canvas.height);
         await delay(animationDelay);
@@ -271,26 +282,29 @@ async function gameLoop(){
 const delay = ms => new Promise(res => setTimeout(res, ms));
  const time = 10
  while (time > 0 && isDead === false && inGame) {
-    drawPlayer();
     
-    const enemySpawnerChance = getRandomInt(5);
+    
+    const enemySpawnerChance = getRandomInt(3); //5
     const enemySpawnerAmount = getRandomInt(4);
-    if (enemySpawnerChance === 2){
+    if (enemySpawnerChance === 1,2,3){
         switch (enemySpawnerAmount){
             case 1:
                 console.log("drawn enemy amount 1")
                 drawEnemy();
+                enemyDrawn = true;
                 break;
             case 2:
                 console.log("drawn enemy amount 2")
                 drawEnemy();
                 drawEnemy();
+                enemyDrawn = true;
                 break;
             case 3:
                 console.log("drawn enemy amount 3")
                 drawEnemy();
                 drawEnemy();
                 drawEnemy();
+                enemyDrawn = true;
                 break;
             case 4:
                 console.log("drawn enemy amount 4")
@@ -298,10 +312,16 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
                 drawEnemy();
                 drawEnemy();
                 drawEnemy();
+                enemyDrawn = true;
         }
         
     }
-   // checkForClicks();
+    drawPlayer();
+    enemyDrawn = false;
+    
+    
+
+
    const checkScore = levels();
    const blinkingDelay = 500
 
@@ -467,13 +487,12 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     continueButton.onclick = function() {
-        startmenu.style.display = 'none'; // Hide the startmenu
-        bgImage.style.filter = 'blur(0px)'; // Change the blur level
+        startmenu.style.display = 'none';
+        bodyElement.classList.toggle("no-blur");
         inMenu = false;
         audioElement.play();
       };
 });
-
 
 
 document.addEventListener('click', (e) => {
