@@ -3,6 +3,9 @@ const startmenu = document.getElementById('startmenu');
 const music = document.getElementById('music');
 const gamecontainer = document.getElementById('gamecontainer');
 const customCursor = document.getElementById('custom-cursor');
+const continueButton = document.getElementById('continueButton');
+const bgImage = document.querySelector(".bg-image");
+let inMenu = true;
 let inGame = false;
 let pojoja = 0
 let isDead = false;
@@ -19,7 +22,8 @@ let lifeAmount = 3;
 let hittedHemuls = 0;
 let missedHemuls = 0;
 
-const audioElement = document.getElementById('myAudio');
+var audioElement = new Audio('./sound/music.wav');
+var crispyButton = new Audio('./sound/crispyButton.mp3');
 
 function changePlaybackSpeed(speed) {
     if (audioElement) {
@@ -115,7 +119,7 @@ function start() {
     inGame = true;
     fillCanvases();  
     gameLoop();
-    audioElement.play();
+    
     //chooseMusic();
     
     //drawPlayer();
@@ -223,6 +227,7 @@ function CanvasClicked(event) {
             isDead = true;
             alert('game over');
             window.location.reload();
+            audioElement.pause()
     }
   }
   if (canvas.id === "enemy"){
@@ -232,6 +237,7 @@ function CanvasClicked(event) {
     isDead = true;
     alert('game over');
     window.location.reload();
+    audioElement.pause()
   }
 }
 
@@ -310,6 +316,7 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
         isDead = true;
         alert('game over');
         window.location.reload();
+        audioElement.pause()
     }
 
     fillCanvases();
@@ -423,6 +430,7 @@ function clear() {
     }
     console.log("new game called");
     window.location.reload();
+    audioElement.pause()
 }
 
 
@@ -430,25 +438,26 @@ function clear() {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    
 
     const startButton = document.getElementById("start");
     const newGameButton = document.getElementById("newGame");
 
-    startButton.onclick = function() {
+    inMenu = true;
 
-        if (inGame == false) {
+    startButton.onclick = function() {
+        crispyButton.play();
+        if (inGame == false && inMenu == false) {
             pojoja = 0;
             updateScore();
             start();   
         }
-        
+    
         
     };
 
     newGameButton.onclick = function() {
         
-        if (inGame){
+        if (inGame && inMenu == false){
             pojoja = 0;
             updateScore();
             inGame = false;
@@ -456,6 +465,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
     };
+
+    continueButton.onclick = function() {
+        startmenu.style.display = 'none'; // Hide the startmenu
+        bgImage.style.filter = 'blur(0px)'; // Change the blur level
+        inMenu = false;
+        audioElement.play();
+      };
 });
 
 
@@ -475,18 +491,31 @@ document.addEventListener('click', (e) => {
 });
 
 startbtn.addEventListener('click', () => {
-    startmenu.className = 'hidden';
+    
     gamecontainer.className = 'bg-default h-screen items-center pt-32 justify-center';
     document.body.style.backgroundImage = 'url("./img/bg.png")';
-    music.src = "";
+    //music.src = "";
     
 });
 document.addEventListener('mousemove', (e) => {
+    const cursorSize = 132;
+    const customCursor = document.getElementById('custom-cursor'); // Get the cursor element
     
-    const cursorSize = 132; 
-    customCursor.style.left = `${e.clientX - cursorSize / 4}px`; 
-    customCursor.style.top = `${e.clientY - cursorSize / 1.5}px`;
+    // Calculate the cursor position with constraints
+    let x = e.clientX - cursorSize / 4;
+    let y = e.clientY - cursorSize / 1.5;
+
+    // Ensure the cursor stays within the viewport
+    const maxX = window.innerWidth - cursorSize;
+    const maxY = window.innerHeight - cursorSize;
+
+    x = Math.min(maxX, Math.max(0, x));
+    y = Math.min(maxY, Math.max(0, y));
+
+    customCursor.style.left = `${x}px`;
+    customCursor.style.top = `${y}px`;
 });
+
 updateBestScoreElement();
 
 

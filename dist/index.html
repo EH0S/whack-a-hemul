@@ -9,7 +9,7 @@
     
 </head>
 
-<body style="background-image: url('./img/bg-2.png');">
+<body class="">
 
     <canvas id="canvascloud" class="w-full fixed"></canvas>
     <canvas id="canvascloud2"class="w-full fixed"></canvas>
@@ -17,27 +17,25 @@
     <img src="./img/cloud-transparent.png" width="200" height="100" id="cloud1" class="hidden">
     <img src="./img/cloud-2-transparent.png" width="200" height="100" id="cloud2" class="hidden">
 
-    <div class="startmenu">
+<div class="startmenu " id="startmenu">
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem deserunt labore repudiandae dolorem, inventore architecto quia molestias vero dolores quo distinctio modi nostrum quis? Consequatur saepe fuga sint porro aperiam!</p>
+        <button class="containerButton" id="continueButton">Continue</button>
+</div>
 
-<div class=" h-screen justify-center items-center bg-default hidden" 
-    id="startmenu">
+<div class=" h-screen justify-center items-center bg-default hidden" >
     
     <div class=" flex justify-center" >
         <button class="mt-10 p-5 border rounded-lg text-white font-bold hover:bg-[#0A1C4D]"
         id="startbtn" >Start the game!</button>
 
-        <audio id="music" autoplay>
-            <source src="./sound/music.wav" type="audio/wav">
-            Your browser does not support the audio element.
-          </audio>
           
     </div>
     
 </div>
 </div>
-
+<div class="bg-image">
 <div class="gameArea">
-    <audio id="myAudio" loop src="./sound/music.wav" class="hidden"></audio>
+    <audio id="myAudio"></audio>
     <audio id="hihi"></audio>
     <audio id="gameMusic"></audio>
     <div class="bg-default h-screen items-center justify-center " id="gamecontainer">
@@ -53,8 +51,10 @@
         
     </div>
 </div>
+
     <img src="./img/hemul_8k_UHD.png" class="hidden" alt="" id="source" />
     <img src="./img/nuija_transparent1.png" width="100px" class="hidden" alt="" id="enemy" />
     <script type="text/javascript" src="./script/main.js"></script>
+</div>
 </body>
 </html>
