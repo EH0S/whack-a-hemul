@@ -1,4 +1,5 @@
-.gameArea .gameButton {
+.gameArea{
+    filter: blur(7px);
     cursor: none;
     
     z-index: 999;
@@ -6,7 +7,7 @@
   
 /* Background image */
 /* Background image using a pseudo-element */
-body::before {
+body::before{
   content: "";
   background-image: url('./img/bg-2.png');
   background-repeat: no-repeat;
@@ -59,12 +60,13 @@ body::before {
 
 .p-1 {
   margin-bottom: 40px;
+  
 }
 
 #custom-cursor {
     width: 132px; /* Set the size of the clickable area */
     height: 132px;
-    background-image: url('/dist/img/nuija_transparent1.png'); /* Use your custom cursor image */
+    background-image: url('./img/nuija_transparent1.png'); /* Use your custom cursor image */
     background-repeat: no-repeat;
     position: absolute;
     pointer-events: none;

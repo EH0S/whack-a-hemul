@@ -4,6 +4,7 @@ const music = document.getElementById('music');
 const gamecontainer = document.getElementById('gamecontainer');
 const customCursor = document.getElementById('custom-cursor');
 const continueButton = document.getElementById('continueButton');
+const gameAreas = document.querySelectorAll('.gameArea');
 const bodyElement = document.body;
 
 let inMenu = true;
@@ -11,8 +12,9 @@ let inGame = false;
 let pojoja = 0
 let isDead = false;
 
-var audio = new Audio('./sound/gnome.mp3');
-var death = new Audio('./sound/death.mp3'); 
+var audio = new Audio('./sound/'); // hemulClicked sound TODO
+var death = new Audio('./sound/');  // losegame sound TODO
+var missedHemul = new Audio('./sound/'); // missedHemul TODO
 
 let bestScore = localStorage.getItem('bestScore') || 0; 
 const scoreElement = document.getElementById('score');
@@ -22,10 +24,9 @@ const lifes = document.getElementById('life');
 let lifeAmount = 3;
 let hittedHemuls = 0;
 let missedHemuls = 0;
-let enemyDrawn = false;
 
 var audioElement = new Audio('./sound/music.wav');
-var crispyButton = new Audio('./sound/crispyButton.mp3');
+var crispyButton = new Audio('./sound/'); // button sound TODO
 
 
 function changePlaybackSpeed(speed) {
@@ -139,11 +140,12 @@ function drawPlayer() {
 
 //small bug in enemy drawing, since they can be overlapped by other enemies
 //this doesn't really affect the game so not gonna fix : - )
-function drawEnemy(){
+function drawEnemy(enemyAmount){
     let animationDelay = 50;
     const delay = ms => new Promise(res => setTimeout(res, ms));
-
-
+    
+for (let i = 1; i < enemyAmount; i++){
+        
     let x = getRandomInt(4);
     let y = getRandomInt(4);
 
@@ -175,6 +177,7 @@ function drawEnemy(){
     }
     requestAnimationFrame(animate);
 }
+}
 
 
 function CanvasClicked(event) {
@@ -199,7 +202,7 @@ function CanvasClicked(event) {
     
   }
   else if (inGame && canvas.id != "hemul") {
-    console.log('l bozo'); // if empty square clicked do this...
+    // if empty square clicked do this...
         lifeAmount = lifeAmount - 1;
         lifes.textContent = lifeAmount;
         if (lifeAmount < 1) {
@@ -266,42 +269,30 @@ async function gameLoop(){
  while (time > 0 && isDead === false && inGame) {
     
     
-    const enemySpawnerChance = getRandomInt(3); //5
+    const enemySpawnerChance = getRandomInt(5); //5
     const enemySpawnerAmount = getRandomInt(4);
 
 
-    if (enemySpawnerChance === 1,2,3){
+    if (enemySpawnerChance === 2){
         switch (enemySpawnerAmount){
             case 1:
                 console.log("drawn enemy amount 1")
-                drawEnemy();
-                enemyDrawn = true;
+                drawEnemy(1);
                 break;
             case 2:
                 console.log("drawn enemy amount 2")
-                drawEnemy();
-                drawEnemy();
-                enemyDrawn = true;
+                drawEnemy(2);
                 break;
             case 3:
                 console.log("drawn enemy amount 3")
-                drawEnemy();
-                drawEnemy();
-                drawEnemy();
-                enemyDrawn = true;
+                drawEnemy(3);
                 break;
             case 4:
                 console.log("drawn enemy amount 4")
-                drawEnemy();
-                drawEnemy();
-                drawEnemy();
-                drawEnemy();
-                enemyDrawn = true;
+                drawEnemy(4);
         }
-        
     }
     drawPlayer();
-    enemyDrawn = false;
     
     
 
@@ -313,22 +304,25 @@ async function gameLoop(){
     await delay(checkScore); 
     missedHemuls += 1;
 
-    if (hittedHemuls != missedHemuls){
-        death.play();
+    if (hittedHemuls != missedHemuls){ //if hemul has been missed do this...
+        lifeAmount = lifeAmount - 1;
+        lifes.textContent = lifeAmount;
+        missedHemuls.play();
+        if (lifeAmount < 1) {
+            death.play();
 
     
-        isDead = true;
-        alert('game over');
-        window.location.reload();
-        audioElement.pause()
+            isDead = true;
+            alert('game over');
+            window.location.reload();
+            audioElement.pause()
+    }
+
     }
 
     fillCanvases();
-    //await delay(blinkingDelay); //blinking delay - can be removed if annoying
-
-    //infinite game loop so continue here with countdown timer or score system...
  }
- // end game
+
 
 }
 
@@ -338,10 +332,11 @@ const hemul = {
     speedLvl1: Math.floor((Math.random() * 2000) + 1000),
     speedLvl2: Math.floor((Math.random() * 1500) + 1000),
     speedLvl3: Math.floor((Math.random() * 1000) + 800),
-    speedLvl4: Math.floor((Math.random() * 1000) + 500),
+    speedLvl4: Math.floor((Math.random() * 1000) + 600),
     speedLvl5: Math.floor((Math.random() * 900) + 500),
     speedLvl6: Math.floor((Math.random() * 800) + 500),
-    speedLvl7: Math.floor((Math.random() * 600) + 350),
+    speedLvl7: Math.floor((Math.random() * 600) + 450),
+    speedLvl8: Math.floor((Math.random() * 600) + 350),
 };
 function changePlaybackSpeed(speed) {
     audioElement.playbackRate = speed;
@@ -354,7 +349,7 @@ function levels(){
         checkScore = hemul.speedLvl1;
         changePlaybackSpeed(1.2)
         for (const cloud of clouds) {
-            cloud.speed = 0.1;
+            cloud.speed = 0.01;
         }
         
         return checkScore;
@@ -364,7 +359,7 @@ function levels(){
         checkScore = hemul.speedLvl2;
         changePlaybackSpeed(1.5)
         for (const cloud of clouds) {
-            cloud.speed = 0.2;
+            cloud.speed = 0.05;
         }
         return checkScore;
     }
@@ -404,12 +399,21 @@ function levels(){
         }
         return checkScore;
     }
-    if (pojoja >= 35){
+    if (pojoja >= 35 && pojoja < 45){
         console.log("Speed: Lvl7");
         checkScore = hemul.speedLvl7;
-        changePlaybackSpeed(2.7)
+        changePlaybackSpeed(2)
         for (const cloud of clouds) {
             cloud.speed = 2;
+        }
+        return checkScore;
+    }
+    if (pojoja >= 45){
+        console.log("Speed: Lvl8");
+        checkScore = hemul.speedLvl8;
+        changePlaybackSpeed(3)
+        for (const cloud of clouds) {
+            cloud.speed = 2.5;
         }
         return checkScore;
     }
@@ -472,7 +476,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     continueButton.onclick = function() {
         startmenu.style.display = 'none';
+        
         bodyElement.classList.toggle("no-blur");
+        gameAreas.forEach(gameArea => {
+            gameArea.style.filter = 'none';
+          });
         inMenu = false;
         audioElement.play();
       };
