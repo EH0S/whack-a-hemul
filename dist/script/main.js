@@ -5,10 +5,12 @@ const gamecontainer = document.getElementById('gamecontainer');
 const customCursor = document.getElementById('custom-cursor');
 const continueButton = document.getElementById('continueButton');
 const bodyElement = document.body;
+
 let inMenu = true;
 let inGame = false;
 let pojoja = 0
 let isDead = false;
+
 var audio = new Audio('./sound/gnome.mp3');
 var death = new Audio('./sound/death.mp3'); 
 
@@ -16,6 +18,7 @@ let bestScore = localStorage.getItem('bestScore') || 0;
 const scoreElement = document.getElementById('score');
 const bestScoreElement = document.getElementById('best-score');
 const lifes = document.getElementById('life');
+
 let lifeAmount = 3;
 let hittedHemuls = 0;
 let missedHemuls = 0;
@@ -24,29 +27,11 @@ let enemyDrawn = false;
 var audioElement = new Audio('./sound/music.wav');
 var crispyButton = new Audio('./sound/crispyButton.mp3');
 
-let enemyPos = [];
 
 function changePlaybackSpeed(speed) {
     if (audioElement) {
         audioElement.playbackRate = speed;
     }
-}
-
-
-function chooseMusic(e){ // PLAY RANDOM SONG WHEN GAME START AND KEEP PLAYING THE LIST
-    const gameMusic = [
-        ".mp3",
-        ".mp3",
-        ".mp3",
-        ".mp3"
-    ];
-    var gameSong = new Audio('./sound/'+gameMusic[getRandomInt(4)]);
-    console.log("Chose song: ",gameSong);
-    gameSong.play();
-    gameSong.addEventListener('ended', function() {
-        chooseMusic();
-        //console.log("song ended", gameSong.currentSrc)
-    });
 }
 
 function updateBestScoreElement() {
@@ -61,22 +46,17 @@ function updateScore() {
         localStorage.setItem('bestScore', bestScore); 
     }
 }
+
 function saveBestScore() {
     localStorage.setItem('bestScore', bestScore);
 }
-
-
-
-
-
-
 
 const container = document.getElementById('container');
 const image = document.getElementById('source');
 const enemy = document.getElementById('enemy');
 const grid = [];
 
-let currentPos = 0;
+let currentPos = 0; //hemul spawn position
 
 for (let r = 0; r < 4; r++) {
     const row = document.createElement('div');
@@ -120,11 +100,6 @@ function start() {
     inGame = true;
     fillCanvases();  
     gameLoop();
-    
-    //chooseMusic();
-    
-    //drawPlayer();
-    //drawEnemy();
 }
 
 function drawPlayer() {
@@ -144,15 +119,6 @@ function drawPlayer() {
     
     currentPos = [x, y];
 
-    for (enemys in enemyPos) {
-        console.log("hihi: ",enemys);
-    }
-
-    if (enemyDrawn){
-        currentPos = [x, y -1];
-        console.log("JOO O");
-    }
-
 
    // requestAnimationFrame(animate);
     
@@ -171,23 +137,29 @@ function drawPlayer() {
     requestAnimationFrame(animate);
 }
 
+//small bug in enemy drawing, since they can be overlapped by other enemies
+//this doesn't really affect the game so not gonna fix : - )
 function drawEnemy(){
     let animationDelay = 50;
     const delay = ms => new Promise(res => setTimeout(res, ms));
-    const x = getRandomInt(4);
-    const y = getRandomInt(4);
+
+
+    let x = getRandomInt(4);
+    let y = getRandomInt(4);
+
+    //possibly best code ever written
+    do {
+        x = getRandomInt(4);
+        y = getRandomInt(4);
+    } while (x == currentPos[0] && y == currentPos[1]) //checks if enemy pos is in hemul's territory
+
+
     const canvas = grid[x][y];
-    const ctx = canvas.getContext('2d');
     canvas.id = 'enemy';
+
+    const ctx = canvas.getContext('2d');
     ctx.fillStyle = "#C5DCFF";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    //ctx.drawImage(enemy, 0, 0, canvas.width, canvas.height);
-
-    currentPos = [x, y];
-
-    enemyPos.push(x,y);
-    console.log("pos enemy:",enemyPos);
 
     async function animate(){
         ctx.drawImage(enemy, 21, 145, canvas.width, canvas.height);
@@ -206,8 +178,7 @@ function drawEnemy(){
 
 
 function CanvasClicked(event) {
-  // Check if 'event' is defined
-  
+
   if (!event) {
     console.error("Event is undefined");
     return;
@@ -217,6 +188,7 @@ function CanvasClicked(event) {
   const ctx = canvas.getContext("2d");
 
   if (canvas.id === "hemul") {
+    animateCanvasRemoval(canvas);
     canvas.id = '';
     pojoja = pojoja + 1;
     updateScore();
@@ -224,7 +196,6 @@ function CanvasClicked(event) {
     
     audio.play();
     hittedHemuls += 1;
-    animateCanvasRemoval(canvas);
     
   }
   else if (inGame && canvas.id != "hemul") {
@@ -260,32 +231,45 @@ function getRandomInt(max) {
 function animateCanvasRemoval(canvas) {
     const ctx = canvas.getContext('2d');
 
+    let cHeight = canvas.height;
+    const cWidth = canvas.width;
+    let frameCount = 0;
 
 
-    function animate(currentTime) {
-
-
+    function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-       // ctx.clearRect(0, 0, canvas.width, canvas.height);
-      //  ctx.fillStyle = "#05080D";
-      //  ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
+
+        cHeight -= 20;
+        ctx.drawImage(image, 
+            0,
+            canvas.height - cHeight,
+            cWidth,
+            cHeight
+            );
+
+        if (cHeight > 0) {
+            requestAnimationFrame(animate);
+        }
+
+        frameCount++;
     }
 
    
-    requestAnimationFrame(animate);
+    animate();
 }
-
 
 async function gameLoop(){
 
-const delay = ms => new Promise(res => setTimeout(res, ms));
- const time = 10
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+    const time = 10
+
  while (time > 0 && isDead === false && inGame) {
     
     
     const enemySpawnerChance = getRandomInt(3); //5
     const enemySpawnerAmount = getRandomInt(4);
+
+
     if (enemySpawnerChance === 1,2,3){
         switch (enemySpawnerAmount){
             case 1:
