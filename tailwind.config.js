@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'default': "url('./dist/img/mountains.jpg')"
+        
         
       },
     },

@@ -2,9 +2,14 @@
     filter: blur(7px);
     cursor: none;
     
-    z-index: 999;
+    z-index: 9;
   }
-  
+
+
+  button,
+  [role="button"] {
+    cursor: none;
+  }
 /* Background image */
 /* Background image using a pseudo-element */
 body::before{
@@ -40,11 +45,15 @@ body::before{
   text-align: center;
   border-radius: 50px;
 }
-
+.scoreboard{
+  text-align: center;
+  margin-top: 10px;
+  
+}
  
 
 .containerButton {
-  background-color: #4CAF50; /* Green */
+  background-color: #376f775a; /* Green */
   border: none;
   color: white;
   padding: 15px 32px;
@@ -60,7 +69,6 @@ body::before{
 
 .p-1 {
   margin-bottom: 40px;
-  
 }
 
 #custom-cursor {

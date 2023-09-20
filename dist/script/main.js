@@ -12,9 +12,9 @@ let inGame = false;
 let pojoja = 0
 let isDead = false;
 
-var audio = new Audio('./sound/'); // hemulClicked sound TODO
-var death = new Audio('./sound/');  // losegame sound TODO
-var missedHemul = new Audio('./sound/'); // missedHemul TODO
+var audio = new Audio('./sound/hit.wav'); // hemulClicked sound TODO
+var death = new Audio('./sound/lose.wav');  // losegame sound TODO
+var missedHemul = new Audio('./sound/missed.mp3'); // missedHemul TODO
 
 let bestScore = localStorage.getItem('bestScore') || 0; 
 const scoreElement = document.getElementById('score');
@@ -26,7 +26,6 @@ let hittedHemuls = 0;
 let missedHemuls = 0;
 
 var audioElement = new Audio('./sound/music.wav');
-var crispyButton = new Audio('./sound/'); // button sound TODO
 
 
 function changePlaybackSpeed(speed) {
@@ -210,9 +209,10 @@ function CanvasClicked(event) {
 
     
             isDead = true;
-            alert('game over');
-            window.location.reload();
+            alert('game overaaa');
             audioElement.pause()
+            window.location.reload();
+            
     }
   }
   if (canvas.id === "enemy"){
@@ -304,10 +304,13 @@ async function gameLoop(){
     await delay(checkScore); 
     missedHemuls += 1;
 
-    if (hittedHemuls != missedHemuls){ //if hemul has been missed do this...
+    if (hittedHemuls != missedHemuls && isDead == false){ //if hemul has been missed do this...
         lifeAmount = lifeAmount - 1;
         lifes.textContent = lifeAmount;
-        missedHemuls.play();
+        missedHemul.play();
+        hittedHemuls += 1;
+        console.log(hittedHemuls);
+        console.log(missedHemuls);
         if (lifeAmount < 1) {
             death.play();
 
@@ -453,7 +456,6 @@ document.addEventListener('DOMContentLoaded', function() {
     inMenu = true;
 
     startButton.onclick = function() {
-        crispyButton.play();
         if (inGame == false && inMenu == false) {
             pojoja = 0;
             updateScore();
